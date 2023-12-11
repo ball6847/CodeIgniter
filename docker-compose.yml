@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  php:
+    image: dunglas/frankenphp
+    environment:
+      FRANKENPHP_CONFIG: worker ./public/index.php 1
+      MAX_REQUESTS: 100
+    volumes:
+      - .:/app
+    ports:
+      - 80:80
+      - 443:443
+
