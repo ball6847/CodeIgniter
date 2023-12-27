@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the debounce delay in seconds
-debounce_delay=5
+debounce_delay=1
 
 # Initialize a variable to store the last event timestamp
 last_event_time=0
@@ -10,14 +10,15 @@ last_event_time=0
 run_my_command() {
     # Your command to run when a file change occurs
 	# docker-compose restart php
-	frankenphp reload --config /etc/caddy/Caddyfile
+    frankenphp stop
+    frankenphp run --config /etc/caddy/Caddyfile --adapter caddyfile &
     # Replace the echo statement with your actual command
 }
 
 frankenphp run --config /etc/caddy/Caddyfile --adapter caddyfile &
 
 # Monitor the current directory for file changes
-inotifywait -m -e create,modify,delete . |
+inotifywait -r -m -e create,modify,delete . |
     while read -r directory event file; do
         # Get the current timestamp
         current_time=$(date +%s)
