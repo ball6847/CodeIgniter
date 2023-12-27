@@ -2,7 +2,9 @@ version: '3'
 
 services:
   php:
-    image: dunglas/frankenphp
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       FRANKENPHP_CONFIG: worker ./public/index.php 1
       MAX_REQUESTS: 100
